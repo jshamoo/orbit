@@ -83,13 +83,13 @@ const Sidebar = () => {
       </div>
       <div className="mt-20">
         {navItems.map((navItem, i) => (
-          <>
+          <React.Fragment key={i}>
             {navItem.allowedRoles.includes(role) && (
-              <NavItemContainer key={i}>
+              <NavItemContainer >
                 <NavItem navItem={navItem} />
               </NavItemContainer>
             )}
-          </>
+          </React.Fragment>
         ))}
       </div>
     </section>
