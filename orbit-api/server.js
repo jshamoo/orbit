@@ -11,6 +11,11 @@ const dashboardData = require('./data/dashboard');
 const User = require('./data/User');
 const InventoryItem = require('./data/InventoryItem');
 
+const csrf = require('csurf');
+const csrfProtection = csrf({
+  cookie: true
+})
+
 const {
   createToken,
   hashPassword,
@@ -167,6 +172,12 @@ const checkJwt = jwt({
   issuer: 'api.orbit',
   audience: 'api.orbit',
   getToken: req => req.cookies.token
+})
+
+app.use(csrfProtection);
+
+app.get('/api/csrf-token', (req, res) => {
+  res.json({csrfToken: req.csrfToken()})
 })
 
 const requireAdmin = (req, res, next) => {
