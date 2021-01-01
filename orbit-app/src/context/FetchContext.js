@@ -1,6 +1,6 @@
 import React, { createContext, useContext } from 'react';
 import axios from 'axios';
-import {AuthContext} from './../context/AuthContext'
+import { AuthContext } from './../context/AuthContext'
 
 const FetchContext = createContext();
 const { Provider } = FetchContext;
@@ -14,12 +14,7 @@ const FetchProvider = ({ children }) => {
 
   authAxios.interceptors.request.use(
     config => {
-      const {origin} = new URL(config.url);
-      const allowedOrigins = ['http://localhost:3001'];
-      // only needed for global interceptor
-      if (allowedOrigins.includes(origin)) {
-        config.headers.Authorization = `Bearer ${authContext.authState.token}`;
-      }
+      config.headers.Authorization = `Bearer ${authContext.authState.token}`;
       return config;
     },
     error => {
